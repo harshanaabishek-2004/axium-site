@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Axium - Email confirmed</title>
+<style>
+  :root { --bg:#0b1315; --card:#142226; --text:#f2f7f6; --muted:#9db3b0; --accent:#3a9d8f; --warn:#e0a458; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;
+         background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+  .card { width:100%; max-width:440px; background:var(--card); border:1px solid #223a3f; border-radius:22px; padding:32px 26px; text-align:center; }
+  .logo { width:64px; height:64px; margin:0 auto 18px; border-radius:16px; background:linear-gradient(135deg,#2f8f82,#8fb8ae);
+          display:flex; align-items:center; justify-content:center; font-size:34px; font-weight:800; color:#fff; }
+  h1 { font-size:24px; margin:0 0 10px; }
+  p { color:var(--muted); line-height:1.55; margin:0 0 12px; font-size:16px; }
+  .ok h1 { color:var(--accent); }
+  .warn h1 { color:var(--warn); }
+  .hint { font-size:14px; margin-top:18px; }
+  [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="logo">A</div>
+
+  <section id="ok" class="ok">
+    <h1>Your email is confirmed</h1>
+    <p>Thanks for joining Axium. Go back to the app and sign in with your email and password.</p>
+  </section>
+
+  <section id="problem" class="warn" hidden>
+    <h1>This link was already used</h1>
+    <p>Your email may already be confirmed. Open the Axium app and try signing in.</p>
+    <p>If it says your email is not confirmed, ask the app to send a new confirmation email and use the newest one.</p>
+    <p class="hint">Tip: open the link on the same phone or computer you signed up on, soon after it arrives.</p>
+  </section>
+</main>
+<script>
+  // Supabase adds "#error=..." to the address when the link was already used or has expired
+  var h = (location.hash || "") + (location.search || "");
+  if (/error=|error_code=|otp_expired/i.test(h)) {
+    document.getElementById("ok").hidden = true;
+    document.getElementById("problem").hidden = false;
+  }
+</script>
+</body>
+</html>
