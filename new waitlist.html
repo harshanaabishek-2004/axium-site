@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Join the Axium waitlist</title><meta name="description" content="Axium turns what you type or say into reminders, alarms and summaries. Join the waitlist for the launch."><link rel="stylesheet" href="/style.css"></head>
+<body><header><a class="logo" href="/">Axium</a><nav><a href="/download.html">Download</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/delete-account.html">Delete account</a></nav></header>
+<main>
+<h1>Type it. Say it. Axium remembers it.</h1>
+<p>Write <b>“Dentist tomorrow at 3pm”</b> and Axium finds the date, adds the reminder and sets the alarm. Record a meeting and get the key points and action items. Everything stays in sync on your phone and your computer.</p>
+<div class="card" id="box">
+<b>Get early access</b>
+<p class="mut">Axium launches on Android in December. Leave your email and we will tell you the day it is ready.</p>
+<form id="f">
+<p><label for="em" class="mut">Email</label><br><input id="em" type="email" autocomplete="email" required maxlength="200" placeholder="you@example.com" style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:16px"></p>
+<p><button class="btn" id="go" type="submit" style="border:0;cursor:pointer;font-size:16px">Join the waitlist</button></p>
+<p class="mut" id="msg" role="status"></p>
+</form>
+<p class="mut">We only use your email to tell you about the launch, and you can ask us to delete it any time at support@axiumnotes.com. See the <a href="/privacy.html">privacy policy</a>.</p>
+</div>
+<div class="card"><b>What you get</b><ul><li>Dates, alarms and place reminders from plain sentences</li><li>Voice recordings turned into summaries and action items</li><li>Scan documents and photos into notes</li><li>An AI assistant that explains, solves and writes</li><li>Android and Windows, always in sync</li></ul></div>
+<script>
+(function(){
+var URL="https://qxzzrsvssgluujjjcavz.supabase.co",KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF4enpyc3Zzc2dsdXVqampjYXZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNTEwMDUsImV4cCI6MjEwNzcyNzAwNX0.sgMoJZ9m4okjG131yWoy693e7PRnOSyh1r1Zmb2P-60";
+var f=document.getElementById("f"),msg=document.getElementById("msg"),go=document.getElementById("go");
+var src="";try{src=(new URLSearchParams(location.search).get("src")||"").slice(0,40);}catch(e){}
+f.addEventListener("submit",function(e){
+  e.preventDefault();
+  var em=document.getElementById("em").value.trim();
+  go.disabled=true;msg.textContent="Saving…";
+  fetch(URL+"/rest/v1/rpc/join_waitlist",{method:"POST",headers:{"apikey":KEY,"Authorization":"Bearer "+KEY,"Content-Type":"application/json"},body:JSON.stringify({p_email:em,p_source:src})})
+  .then(function(r){return r.text().then(function(t){return{ok:r.ok,t:t}})})
+  .then(function(x){
+    if(x.ok){f.innerHTML="<p><b>You are on the list.</b> We will email you when Axium is ready.</p>";}
+    else{go.disabled=false;msg.textContent=x.t.indexOf("invalid_email")>=0?"That email does not look right. Please check it.":"Something went wrong. Please try again in a minute.";}
+  }).catch(function(){go.disabled=false;msg.textContent="Could not reach the server. Check your connection and try again.";});
+});
+})();
+</script>
+</main>
+<footer><a href="/download.html">Download</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/delete-account.html">Delete your account</a><a href="mailto:support@axiumnotes.com">support@axiumnotes.com</a><p>© 2026 Axium</p></footer></body></html>
